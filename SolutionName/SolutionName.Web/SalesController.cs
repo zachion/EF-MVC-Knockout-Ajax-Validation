@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SolutionName.DataLayer;
 using SolutionName.Model;
+using SolutionName.Web.ViewModels;
 
 namespace SolutionName.Web
 {
@@ -39,7 +40,15 @@ namespace SolutionName.Web
             {
                 return HttpNotFound();
             }
-            return View(salesOrder);
+
+            SalesOrderViewModel salesOrderViewModel = new SalesOrderViewModel();
+            salesOrderViewModel.SalesOrderId = salesOrder.SalesOrderId;
+            salesOrderViewModel.CustomerName = salesOrder.CustomerName;
+            salesOrderViewModel.PONumber = salesOrder.PONumber;
+            salesOrderViewModel.MessageToClient = "I originate from the viewmodel, rather than the model.";
+
+
+            return View(salesOrderViewModel);
         }
 
         // GET: Sales/Create
