@@ -27,7 +27,11 @@
                 <td class="form-group">Delete</td>
             </tr>
         </tbody>
-    </table>
+    </table><br />
+    https://stackoverflow.com/questions/9261296/how-to-debug-template-binding-errors-for-knockoutjs
+    1.<div data-bind="text: ko.toJSON($data)"></div><br />
+    2.<pre data-bind="text: JSON.stringify(ko.toJS($data), null, 2)"></pre><br />
+    3.<pre data-bind="text: ko.toJSON($data, null, 2)"></pre><br />
 
 </div>
 
