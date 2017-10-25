@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using SolutionName.DataLayer;
 using SolutionName.Model;
+using SolutionName.DataLayer;
 using SolutionName.Web.ViewModels;
 
-namespace SolutionName.Web
+namespace SolutionName.Web.Controllers
 {
     public class SalesController : Controller
     {
@@ -22,13 +22,12 @@ namespace SolutionName.Web
         }
 
 
-        // GET: Sales
         public ActionResult Index()
         {
             return View(_salesContext.SalesOrders.ToList());
         }
 
-        // GET: Sales/Details/5
+
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,24 +41,20 @@ namespace SolutionName.Web
             }
 
             SalesOrderViewModel salesOrderViewModel = ViewModels.Helpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
-
-            salesOrderViewModel.MessageToClient = "I originate from the viewmodel, rather than the model.";
-
+            salesOrderViewModel.MessageToClient = "I originated from the viewmodel, rather than the model.";
 
             return View(salesOrderViewModel);
         }
 
-        // GET: Sales/Create
+
         public ActionResult Create()
         {
             SalesOrderViewModel salesOrderViewModel = new SalesOrderViewModel();
             salesOrderViewModel.ObjectState = ObjectState.Added;
-
             return View(salesOrderViewModel);
         }
 
-
-        // GET: Sales/Edit/5
+  
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -72,16 +67,13 @@ namespace SolutionName.Web
                 return HttpNotFound();
             }
 
-
             SalesOrderViewModel salesOrderViewModel = ViewModels.Helpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
-
-            salesOrderViewModel.MessageToClient = string.Format("The original value of Customer Name is {0}.",salesOrderViewModel.CustomerName);
-            salesOrderViewModel.ObjectState = ObjectState.Unchanged;
+            salesOrderViewModel.MessageToClient = string.Format("The original value of Customer Name is {0}.", salesOrderViewModel.CustomerName);
 
             return View(salesOrderViewModel);
         }
 
-        // GET: Sales/Delete/5
+
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -95,8 +87,7 @@ namespace SolutionName.Web
             }
 
             SalesOrderViewModel salesOrderViewModel = ViewModels.Helpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
-
-            salesOrderViewModel.MessageToClient = string.Format("You are about to permanently delete this sales order");
+            salesOrderViewModel.MessageToClient = "You are about to permanently delete this sales order.";
             salesOrderViewModel.ObjectState = ObjectState.Deleted;
 
             return View(salesOrderViewModel);
@@ -117,21 +108,18 @@ namespace SolutionName.Web
         {
             SalesOrder salesOrder = ViewModels.Helpers.CreateSalesOrderFromSalesOrderViewModel(salesOrderViewModel);
 
-            salesOrder.ObjectState = salesOrderViewModel.ObjectState;
-
             _salesContext.SalesOrders.Attach(salesOrder);
-            _salesContext.ChangeTracker.Entries<IObjectWithState>().Single().State = DataLayer.Helpers.ConvertState(salesOrder.ObjectState);
+            _salesContext.ApplyStateChanges();
             _salesContext.SaveChanges();
 
             if (salesOrder.ObjectState == ObjectState.Deleted)
                 return Json(new { newLocation = "/Sales/Index/" });
 
-            salesOrderViewModel.MessageToClient = ViewModels.Helpers.GetMessageToClient(salesOrderViewModel.ObjectState, salesOrder.CustomerName);
-            
-            salesOrderViewModel.SalesOrderId = salesOrder.SalesOrderId;
-            salesOrderViewModel.ObjectState = ObjectState.Unchanged;
-            
-            return Json(new { salesOrderViewModel });
+            string messageToClient = ViewModels.Helpers.GetMessageToClient(salesOrderViewModel.ObjectState, salesOrder.CustomerName);
+            salesOrderViewModel = ViewModels.Helpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
+            salesOrderViewModel.MessageToClient = messageToClient;
+
+            return Json(new {salesOrderViewModel});
         }
     }
 }
