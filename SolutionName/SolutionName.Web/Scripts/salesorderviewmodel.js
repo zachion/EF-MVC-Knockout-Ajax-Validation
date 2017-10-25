@@ -19,6 +19,9 @@ salesOrderViewModel = function (data) {
             success: function (data) {
                 if (data.salesOrderViewModel!=null)
                     ko.mapping.fromJS(data.salesOrderViewModel, {}, self);
+                debugger
+                if (data.newLocation != null)
+                    window.location = data.newLocation;
             }
         })
 
