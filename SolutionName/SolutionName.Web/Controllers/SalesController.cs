@@ -54,7 +54,7 @@ namespace SolutionName.Web.Controllers
             return View(salesOrderViewModel);
         }
 
-  
+
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -119,7 +119,7 @@ namespace SolutionName.Web.Controllers
             salesOrderViewModel = ViewModels.Helpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
             salesOrderViewModel.MessageToClient = messageToClient;
 
-            return Json(new {salesOrderViewModel});
+            return Json(new { salesOrderViewModel });
         }
     }
 }

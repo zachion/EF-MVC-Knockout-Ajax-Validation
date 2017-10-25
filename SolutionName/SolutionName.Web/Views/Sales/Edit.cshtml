@@ -1,5 +1,4 @@
-﻿
-@model SolutionName.Web.ViewModels.SalesOrderViewModel
+﻿@model SolutionName.Web.ViewModels.SalesOrderViewModel
 @using System.Web.Script.Serialization
 
 @{
@@ -8,18 +7,13 @@
 
 @{ string data = new JavaScriptSerializer().Serialize(Model);}
 
-@section scripts
-{
+@section scripts{
     <script src="~/Scripts/knockout-3.4.2.js"></script>
     <script src="~/Scripts/knockout.mapping-latest.js"></script>
     <script src="~/Scripts/salesorderviewmodel.js"></script>
     <script type="text/javascript">
-
-    var salesOrderViewModel = new salesOrderViewModel(@Html.Raw(data));
-    //debugger
-    ko.applyBindings(salesOrderViewModel);
+        var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
+        ko.applyBindings(salesOrderViewModel);
     </script>
 }
-
 @Html.Partial("_EditSalesOrder")
-

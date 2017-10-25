@@ -7,15 +7,14 @@
 
 @{ string data = new JavaScriptSerializer().Serialize(Model);}
 
-@section scripts
-{    
-<script src="~/Scripts/knockout-3.4.2.js"></script>
-<script src="~/Scripts/knockout.mapping-latest.js"></script>
-<script src="~/Scripts/salesorderviewmodel.js"></script>
-<script type="text/javascript"> 
-    var salesOrderViewModel = new salesOrderViewModel(@Html.Raw(data));
-    ko.applyBindings(salesOrderViewModel);
-</script>
+@section scripts{
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <script src="~/Scripts/knockout.mapping-latest.js"></script>
+    <script src="~/Scripts/salesorderviewmodel.js"></script>
+    <script type="text/javascript">
+        var salesOrderViewModel = new SalesOrderViewModel(@Html.Raw(data));
+        ko.applyBindings(salesOrderViewModel);
+    </script>
 }
 
 @Html.Partial("_DisplaySalesOrder")

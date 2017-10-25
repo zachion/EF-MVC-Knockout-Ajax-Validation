@@ -11,39 +11,48 @@ var salesOrderItemMapping = {
             return ko.utils.unwrapObservable(salesOrderItem.SalesOrderItemId);
         },
         create: function (options) {
-            return ko.utils.unwrapObservable(option.data);
+            return ko.utils.unwrapObservable(options.data);
         }
     }
 };
 
-salesOrderViewModel = function (date) {
+
+SalesOrderItemViewModel = function (data) {
     var self = this;
     ko.mapping.fromJS(data, salesOrderItemMapping, self);
 };
 
-salesOrderViewModel = function (data) {
+
+SalesOrderViewModel = function (data) {
     var self = this;
     ko.mapping.fromJS(data, salesOrderItemMapping, self);
 
     self.save = function () {
         $.ajax({
-            url: "/Sales/Save",
+            url: "/Sales/Save/",
             type: "POST",
             data: ko.toJSON(self),
             contentType: "application/json",
             success: function (data) {
-                if (data.salesOrderViewModel !== null)
+                if (data.salesOrderViewModel != null)
                     ko.mapping.fromJS(data.salesOrderViewModel, {}, self);
-                if (data.newLocation !== null)
+
+                if (data.newLocation != null)
                     window.location = data.newLocation;
             }
         });
-    };
+    },
 
-    self.flagSalesOrderAsEdited = function () {
-        if (self.ObjectState() !== ObjectState.Added) {
-            self.ObjectState(ObjectState.Modified);
-        }
-        return true;
-    };
+        self.flagSalesOrderAsEdited = function () {
+            if (self.ObjectState() != ObjectState.Added) {
+                self.ObjectState(ObjectState.Modified);
+            }
+
+            return true;
+        },
+
+        self.addSalesOrderItem = function () {
+            var salesOrderItem = new SalesOrderItemViewModel({ SalesOrderItemId: 0, ProductCode: "", Quantity: 1, UnitPrice: 0, ObjectState: ObjectState.Added });
+            self.SalesOrderItems.push(salesOrderItem);
+        };
 };

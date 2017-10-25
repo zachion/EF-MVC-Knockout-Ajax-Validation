@@ -43,7 +43,7 @@ namespace SolutionName.Web.ViewModels
             salesOrder.PONumber = salesOrderViewModel.PONumber;
             salesOrder.ObjectState = salesOrderViewModel.ObjectState;
 
-            int temporarySalesOrderItemId = -1; 
+            int temporarySalesOrderItemId = -1;
 
             foreach (SalesOrderItemViewModel salesOrderItemViewModel in salesOrderViewModel.SalesOrderItems)
             {

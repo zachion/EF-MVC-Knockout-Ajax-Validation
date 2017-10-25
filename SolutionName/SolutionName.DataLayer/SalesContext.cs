@@ -11,7 +11,7 @@ namespace SolutionName.DataLayer
     public class SalesContext : DbContext
     {
         public SalesContext() : base("DefaultConnection")
-        {            
+        {
         }
 
 
@@ -24,7 +24,5 @@ namespace SolutionName.DataLayer
             modelBuilder.Configurations.Add(new SalesOrderConfiguration());
             modelBuilder.Configurations.Add(new SalesOrderItemConfiguration());
         }
-
-
     }
 }

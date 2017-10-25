@@ -15,6 +15,7 @@ namespace SolutionName.Model
 
         public int SalesOrderId { get; set; }
         public SalesOrder SalesOrder { get; set; }
+
         public ObjectState ObjectState { get; set; }
     }
 }

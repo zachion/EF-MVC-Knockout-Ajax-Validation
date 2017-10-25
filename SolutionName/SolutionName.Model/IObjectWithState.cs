@@ -11,10 +11,11 @@ namespace SolutionName.Model
         ObjectState ObjectState { get; set; }
     }
 
+
     public enum ObjectState
     {
         Unchanged = 0,
-        Added =1,
+        Added = 1,
         Modified = 2,
         Deleted = 3
     }
